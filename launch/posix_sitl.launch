@@ -11,7 +11,7 @@
     <arg name="Y" default="0"/>
     <!-- vehicle model and world -->
     <arg name="est" default="ekf2"/>
-    <arg name="vehicle" default="iris"/>
+    <arg name="vehicle" default="typhoon_h480"/>
     <arg name="world" default="$(find mavlink_sitl_gazebo)/worlds/empty.world"/>
     <arg name="sdf" default="$(find mavlink_sitl_gazebo)/models/$(arg vehicle)/$(arg vehicle).sdf"/>
     <env name="PX4_SIM_MODEL" value="gazebo-classic_$(arg vehicle)" />
@@ -41,4 +41,41 @@
     </include>
     <!-- gazebo model -->
     <node name="$(anon vehicle_spawn)" pkg="gazebo_ros" type="spawn_model" output="screen" args="-sdf -file $(arg sdf) -model $(arg vehicle) -x $(arg x) -y $(arg y) -z $(arg z) -R $(arg R) -P $(arg P) -Y $(arg Y)"/>
+
+     <!-- mavros -->
+    <arg name="fcu_url" default="udp://:14540@127.0.0.1:14550"/>
+	<arg name="gcs_url" default="" />
+	<arg name="tgt_system" default="1" />
+	<arg name="tgt_component" default="1" />
+	<arg name="log_output" default="screen" />
+	<arg name="fcu_protocol" default="v2.0" />
+	<arg name="respawn_mavros" default="false" />
+
+	<include file="$(find mavros)/launch/node.launch">
+		<arg name="pluginlists_yaml" value="$(find mavros)/launch/px4_pluginlists.yaml" />
+		<arg name="config_yaml" value="$(find mavros)/launch/px4_config.yaml" />
+
+		<arg name="fcu_url" value="$(arg fcu_url)" />
+		<arg name="gcs_url" value="$(arg gcs_url)" />
+		<arg name="tgt_system" value="$(arg tgt_system)" />
+		<arg name="tgt_component" value="$(arg tgt_component)" />
+		<arg name="log_output" value="$(arg log_output)" />
+		<arg name="fcu_protocol" value="$(arg fcu_protocol)" />
+		<arg name="respawn_mavros" default="$(arg respawn_mavros)" />
+	</include>
+
+
+    <!--yolo-->
+    <param name="use_cpu"           value="true" />
+
+    <!-- Start yolov5 and ros wrapper -->
+    <!-- <node pkg="yolov8_ros" type="yolo_v8.py" name="yolov8_ros" output="screen" > -->
+    <node pkg="yolov8_ros" type="yolo_v8.py" name="yolov8_ros" >
+        <param name="weight_path"       value="$(find yolov8_ros)/weights/yolov8s.pt"/>
+        <param name="image_topic"       value="/typhoon_h480/cgo3_camera/image_raw" />
+        <param name="pub_topic"         value="/yolov8/BoundingBoxes" />
+        <param name="camera_frame"       value="camera_color_frame"/>
+        <param name="visualize"       value="true"/>
+        <param name="conf"              value="0.3" />
+    </node>
 </launch>
