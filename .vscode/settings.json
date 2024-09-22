@@ -7,8 +7,8 @@
         "C_Cpp.default.browse.limitSymbolsToIncludedHeaders": true,
         "C_Cpp.default.cppStandard": "c++14",
         "C_Cpp.default.cStandard": "c11",
-        "C_Cpp.formatting": "Disabled",
-        "C_Cpp.intelliSenseEngine": "Default",
+        "C_Cpp.formatting": "disabled",
+        "C_Cpp.intelliSenseEngine": "default",
         "C_Cpp.vcpkg.enabled": false,
         "C_Cpp.workspaceParsingPriority": "low",
         "cmake.buildBeforeRun": true,
@@ -28,6 +28,10 @@
                 "nuttx",
                 "esc"
         ],
+        "C_Cpp.errorSquiggles": "enabled",
+        "C_Cpp.intelliSenseEngineFallback": "enabled",
+        "C_Cpp.autocomplete": "default",
+
         "debug.toolBarLocation": "docked",
         "editor.defaultFormatter": "chiehyu.vscode-astyle",
         "editor.insertSpaces": false,
@@ -37,7 +41,7 @@
         "editor.suggest.localityBonus": true,
         "editor.tabSize": 8,
         "editor.wordWrapColumn": 120,
-        "explorer.openEditors.visible": 0,
+        "explorer.openEditors.visible": 1,
         "files.insertFinalNewline": true,
         "files.trimTrailingWhitespace": true,
         "files.watcherExclude": {
@@ -129,5 +133,21 @@
         "yaml.schemas": {
                 "${workspaceFolder}/validation/module_schema.yaml": "${workspaceFolder}/src/modules/*/module.yaml"
         },
-        "ros.distro": "humble"
+        "ros.distro": "noetic",
+        "[c]": {
+                "editor.defaultFormatter": "chiehyu.vscode-astyle"
+        },
+        "clangd.path": "/usr/bin/clangd",
+        "[cpp]": {
+                "editor.defaultFormatter": "chiehyu.vscode-astyle"
+        },
+        "python.autoComplete.extraPaths": [
+                "/home/aubrey/catkin_ws/devel/lib/python3/dist-packages",
+                "/opt/ros/noetic/lib/python3/dist-packages"
+        ],
+        "python.analysis.extraPaths": [
+                "/home/aubrey/catkin_ws/devel/lib/python3/dist-packages",
+                "/opt/ros/noetic/lib/python3/dist-packages"
+        ],
+        "makefile.configureOnOpen": true,
 }
