@@ -4,17 +4,20 @@ using namespace matrix;
 
 
 void LadrcRateControl::clamp(const matrix::Vector3f &val, const matrix::Vector3f &min_val,
-				 const matrix::Vector3f &max_val)
+			     const matrix::Vector3f &max_val)
 {
-	for(int i=0;i<3;++i){
+	for (int i = 0; i < 3; ++i) {
 		(val(i)) < min_val(i) ? min_val(i) : ((val(i) > max_val(i)) ? max_val(i) : val(i));
 	}
 }
 
-void LadrcRateControl::set_td_coef(const Vector3f &a0, const Vector3f &a1)
+void LadrcRateControl::set_td_coef(const Vector3f &wn, const Vector3f &zeta)
 {
-	_a0 = a0;
-	_a0 = a1;
+	for (int i = 0; i < 3; ++i) {
+		_a0(i) = wn(i) * wn(i);
+		_a1(i) = 2.f * wn(i) * zeta(i);
+	}
+
 }
 
 void LadrcRateControl::td_update(const Vector3f &input, const float dt)
@@ -103,13 +106,15 @@ Vector3f LadrcRateControl::acquire_ouptut()
 	return _u;
 }
 
-void LadrcRateControl::set_eso_coef(const Vector3f &b0, const Vector3f &beta01,
-				    const Vector3f &beta02, const Vector3f &beta03)
+void LadrcRateControl::set_eso_coef(const Vector3f &b0, const Vector3f &wc)
 {
 	_b0 = b0;
-	_beta01 = beta01;
-	_beta02 = beta02;
-	_beta03 = beta03;
+
+	for (int i = 0; i < 3; ++i) {
+		_beta01(i) = 3.0f * wc(i);
+		_beta02(i) = 3.0f * wc(i) * wc(i);
+		_beta03(i) = wc(i) * wc(i) * wc(i);
+	}
 }
 
 

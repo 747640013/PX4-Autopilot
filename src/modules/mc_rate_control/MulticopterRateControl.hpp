@@ -91,6 +91,7 @@ private:
 	void updateActuatorControlsStatus(const vehicle_torque_setpoint_s &vehicle_torque_setpoint, float dt);
 
 	RateControl _rate_control; ///< class for rate control calculations
+	LadrcRateControl _ladrc_rate_control; ///< class for ladrc rate control calculations
 
 	uORB::Subscription _battery_status_sub{ORB_ID(battery_status)};
 	uORB::Subscription _control_allocator_status_sub{ORB_ID(control_allocator_status)};
@@ -115,6 +116,7 @@ private:
 
 	bool _landed{true};
 	bool _maybe_landed{true};
+	bool _mc_rate_method{false};
 
 	hrt_abstime _last_run{0};
 

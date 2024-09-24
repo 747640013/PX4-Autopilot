@@ -95,6 +95,33 @@ MulticopterRateControl::parameters_updated()
 	// manual rate control acro mode rate limits
 	_acro_rate_max = Vector3f(radians(_param_mc_acro_r_max.get()), radians(_param_mc_acro_p_max.get()),
 				  radians(_param_mc_acro_y_max.get()));
+
+	_mc_rate_method = _param_mc_rate_method.get();
+
+	_ladrc_rate_control.set_td_coef(Vector3f(_param_adrc_r_td_freq.get(), _param_adrc_p_td_freq.get(),
+					_param_adrc_y_td_freq.get()),
+					Vector3f(_param_adrc_r_td_zeta.get(), _param_adrc_p_td_zeta.get(), _param_adrc_y_td_zeta.get()));
+
+	_ladrc_rate_control.set_distrub_gain(Vector3f(_param_adrc_r_dgain.get(), _param_adrc_p_dgain.get(),
+					     _param_adrc_y_dgain.get()));
+
+	_ladrc_rate_control.set_disturb_limit(Vector3f(-_param_adrc_r_dmax.get(), -_param_adrc_p_dmax.get(),
+					      -_param_adrc_y_dmax.get()),
+					      Vector3f(_param_adrc_r_dmax.get(), _param_adrc_p_dmax.get(),
+							      _param_adrc_y_dmax.get()));
+
+	_ladrc_rate_control.set_gains(Vector3f(_param_adrc_r_err_k1.get(), _param_adrc_p_err_k1.get(),
+					       _param_adrc_y_err_k1.get()),
+				      Vector3f(_param_adrc_r_err_k2.get(), _param_adrc_p_err_k2.get(),
+					       _param_adrc_y_err_k2.get()));
+
+	_ladrc_rate_control.set_output_limit(Vector3f(-_param_adrc_r_umax.get(), -_param_adrc_p_umax.get(),
+					     -_param_adrc_y_umax.get()),
+					     Vector3f(_param_adrc_r_umax.get(), _param_adrc_p_umax.get(),
+							     _param_adrc_y_umax.get()));
+	_ladrc_rate_control.set_eso_coef(Vector3f(_param_adrc_r_eso_gain.get(), _param_adrc_p_eso_gain.get(),
+					 _param_adrc_y_eso_gain.get()),
+					 Vector3f(_param_adrc_r_eso_bw.get(), _param_adrc_p_eso_bw.get(), _param_adrc_y_eso_bw.get()));
 }
 
 void

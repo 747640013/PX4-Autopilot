@@ -67,10 +67,10 @@ public:
 	 * @param a0 三轴，含义：Wn*Wn
 	 * @param a1 三轴，含义：2*zeta*Wn
 	 */
-	void set_td_coef(const matrix::Vector3f &a0, const matrix::Vector3f &a1);
+	void set_td_coef(const matrix::Vector3f &wn, const matrix::Vector3f &zeta);
 
 	/**
-	 * 设置跟踪微分器参数
+	 * 更新跟踪微分器参数
 	 * @param input 三轴，角速度环输入，即角度环输出
 	 * @param dt 三轴，时间间隔
 	 */
@@ -88,6 +88,11 @@ public:
 	matrix::Vector3f acquire_differential_signal(void);
 
 
+	/**
+	 * 设置控制器参数
+	 * @param beta1 误差增益
+	 * @param beta2 误差导数增益
+	 */
 	void set_gains(const matrix::Vector3f &beta1, const matrix::Vector3f &beta2);
 
 	void set_output_limit(const matrix::Vector3f &umin, const matrix::Vector3f &umax);
@@ -111,8 +116,12 @@ public:
 
 	matrix::Vector3f acquire_ouptut(void);
 
-	void set_eso_coef(const matrix::Vector3f &b0, const matrix::Vector3f &beta01,
-			  const matrix::Vector3f &beta02, const matrix::Vector3f &beta03);
+	/**
+	 * 设置观测器参数
+	 * @param b0 观测器输入增益
+	 * @param wc 观测器带宽
+	 */
+	void set_eso_coef(const matrix::Vector3f &b0, const matrix::Vector3f &wc);
 
 
 	void set_disturb_limit(const matrix::Vector3f &dmin, const matrix::Vector3f &dmax);
