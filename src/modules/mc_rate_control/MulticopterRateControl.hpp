@@ -34,6 +34,7 @@
 #pragma once
 
 #include <lib/rate_control/rate_control.hpp>
+#include <lib/rate_control/ladrc_rate_control.hpp>
 #include <lib/matrix/matrix/math.hpp>
 #include <lib/perf/perf_counter.h>
 #include <px4_platform_common/defines.h>
@@ -159,6 +160,38 @@ private:
 		(ParamFloat<px4::params::MC_ACRO_SUPEXPO>) _param_mc_acro_supexpo,		/**< superexpo stick curve shape (roll & pitch) */
 		(ParamFloat<px4::params::MC_ACRO_SUPEXPOY>) _param_mc_acro_supexpoy,		/**< superexpo stick curve shape (yaw) */
 
-		(ParamBool<px4::params::MC_BAT_SCALE_EN>) _param_mc_bat_scale_en
+		(ParamBool<px4::params::MC_BAT_SCALE_EN>) _param_mc_bat_scale_en,
+
+		(ParamBool<px4::params::MC_RATE_METHOD>) _param_mc_rate_method,
+
+		(ParamFloat<px4::params::ADRC_R_TD_ZETA>) _param_adrc_r_td_zeta,
+		(ParamFloat<px4::params::ADRC_R_TD_FREQ>) _param_adrc_r_td_freq,
+		(ParamFloat<px4::params::ADRC_R_ERR_K1>) _param_adrc_r_err_k1,
+		(ParamFloat<px4::params::ADRC_R_ERR_K2>) _param_adrc_r_err_k2,
+		(ParamFloat<px4::params::ADRC_R_DMAX>) _param_adrc_r_dmax,
+		(ParamFloat<px4::params::ADRC_R_DGAIN>) _param_adrc_r_dgain,
+		(ParamFloat<px4::params::ADRC_R_UMAX>) _param_adrc_r_umax,
+		(ParamFloat<px4::params::ADRC_R_ESO_GAIN>) _param_adrc_r_eso_gain,
+		(ParamFloat<px4::params::ADRC_R_ESO_BW>) _param_adrc_r_eso_bw,
+
+		(ParamFloat<px4::params::ADRC_P_TD_ZETA>) _param_adrc_p_td_zeta,
+		(ParamFloat<px4::params::ADRC_P_TD_FREQ>) _param_adrc_p_td_freq,
+		(ParamFloat<px4::params::ADRC_P_ERR_K1>) _param_adrc_p_err_k1,
+		(ParamFloat<px4::params::ADRC_P_ERR_K2>) _param_adrc_p_err_k2,
+		(ParamFloat<px4::params::ADRC_P_DMAX>) _param_adrc_p_dmax,
+		(ParamFloat<px4::params::ADRC_P_DGAIN>) _param_adrc_p_dgain,
+		(ParamFloat<px4::params::ADRC_P_UMAX>) _param_adrc_p_umax,
+		(ParamFloat<px4::params::ADRC_P_ESO_GAIN>) _param_adrc_p_eso_gain,
+		(ParamFloat<px4::params::ADRC_P_ESO_BW>) _param_adrc_p_eso_bw,
+
+		(ParamFloat<px4::params::ADRC_Y_TD_ZETA>) _param_adrc_y_td_zeta,
+		(ParamFloat<px4::params::ADRC_Y_TD_FREQ>) _param_adrc_y_td_freq,
+		(ParamFloat<px4::params::ADRC_Y_ERR_K1>) _param_adrc_y_err_k1,
+		(ParamFloat<px4::params::ADRC_Y_ERR_K2>) _param_adrc_y_err_k2,
+		(ParamFloat<px4::params::ADRC_Y_DMAX>) _param_adrc_y_dmax,
+		(ParamFloat<px4::params::ADRC_Y_DGAIN>) _param_adrc_y_dgain,
+		(ParamFloat<px4::params::ADRC_Y_UMAX>) _param_adrc_y_umax,
+		(ParamFloat<px4::params::ADRC_Y_ESO_GAIN>) _param_adrc_y_eso_gain,
+		(ParamFloat<px4::params::ADRC_Y_ESO_BW>) _param_adrc_y_eso_bw
 	)
 };
