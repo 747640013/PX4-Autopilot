@@ -241,7 +241,12 @@ MulticopterRateControl::Run()
 			}
 
 			// run rate controller
-			const Vector3f att_control = _rate_control.update(rates, _rates_setpoint, angular_accel, dt, _maybe_landed || _landed);
+			Vector3f att_control;
+			if (_mc_rate_method == true) {
+				att_control = _ladrc_rate_control.update(rates,_rates_setpoint,dt,_maybe_landed || _landed);
+			} else {
+				att_control = _rate_control.update(rates, _rates_setpoint, angular_accel, dt, _maybe_landed || _landed);
+			}
 
 			// publish rate controller status
 			rate_ctrl_status_s rate_ctrl_status{};

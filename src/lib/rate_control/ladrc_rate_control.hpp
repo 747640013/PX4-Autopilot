@@ -147,7 +147,7 @@ public:
 	 * @param dt 时间间隔
 	 * @return 控制力距
 	 */
-	matrix::Vector3f update(const matrix::Vector3f &rate, const matrix::Vector3f &rate_sp, const float dt);
+	matrix::Vector3f update(const matrix::Vector3f &rate, const matrix::Vector3f &rate_sp, const float dt,const bool landed);
 
 	void reset(void);
 

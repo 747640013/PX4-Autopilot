@@ -170,7 +170,7 @@ Vector3f LadrcRateControl::acquire_eso_disturb()
 	return _disturb;
 }
 
-Vector3f LadrcRateControl::update(const Vector3f &rate, const Vector3f &rate_sp, const float dt)
+Vector3f LadrcRateControl::update(const Vector3f &rate, const Vector3f &rate_sp, const float dt,const bool landed)
 {
 	td_update(rate_sp, dt);
 	Vector3f v1 = acquire_control_input();
@@ -184,7 +184,11 @@ Vector3f LadrcRateControl::update(const Vector3f &rate, const Vector3f &rate_sp,
 	Vector3f u = ctl_update(v1, v2, z1, z2, disturb);
 
 	eso_update(u, rate, dt);
+	if(landed){
+		reset();
+	}
 	return u;
+
 }
 
 void LadrcRateControl::reset()

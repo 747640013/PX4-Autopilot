@@ -301,7 +301,7 @@ PARAM_DEFINE_INT32(MC_BAT_SCALE_EN, 0);
  * @boolean
  * @group Multicopter Rate Control
  */
-PARAM_DEFINE_INT32(MC_RATE_METHOD, 0);
+PARAM_DEFINE_INT32(MC_RATE_METHOD, 1);
 
 /**
  * ADRC TD damping ratio for roll
