@@ -34,6 +34,8 @@
 px4_add_library(RateControl
 	rate_control.cpp
 	rate_control.hpp
+	ladrc_rate_control.cpp
+	ladrc_rate_control.hpp
 )
 target_compile_options(RateControl PRIVATE ${MAX_CUSTOM_OPT_LEVEL})
 target_include_directories(RateControl PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
