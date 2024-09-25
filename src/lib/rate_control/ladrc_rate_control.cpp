@@ -23,7 +23,7 @@ void LadrcRateControl::set_td_coef(const Vector3f &wn, const Vector3f &zeta)
 void LadrcRateControl::td_update(const Vector3f &input, const float dt)
 {
 	_v = input;
-	_v1 += _v1 * dt;
+	_v1 += _v2 * dt;
 	_v2 += (_a0.emult(_v - _v1) - _a1.emult(_v2)) * dt;
 }
 
@@ -170,7 +170,7 @@ Vector3f LadrcRateControl::acquire_eso_disturb()
 	return _disturb;
 }
 
-Vector3f LadrcRateControl::update(const Vector3f &rate, const Vector3f &rate_sp, const float dt,const bool landed)
+Vector3f LadrcRateControl::update(const Vector3f &rate, const Vector3f &rate_sp, const float dt, const bool landed)
 {
 	td_update(rate_sp, dt);
 	Vector3f v1 = acquire_control_input();
@@ -184,9 +184,11 @@ Vector3f LadrcRateControl::update(const Vector3f &rate, const Vector3f &rate_sp,
 	Vector3f u = ctl_update(v1, v2, z1, z2, disturb);
 
 	eso_update(u, rate, dt);
-	if(landed){
+
+	if (landed) {
 		reset();
 	}
+
 	return u;
 
 }
@@ -196,4 +198,26 @@ void LadrcRateControl::reset()
 	td_reset();
 	ctl_reset();
 	eso_reset();
+}
+
+void LadrcRateControl::record_adrc_status(ladrc_status_s &rate_status, LadrcRateControl &ladrc)
+{
+	rate_status.timestamp = hrt_absolute_time();
+
+	for (int i = 0; i < 3; ++i) {
+		rate_status.v[i] = ladrc.acquire_control_input()(i);
+		rate_status.v1[i] = ladrc.acquire_tracking_signal()(i);
+		rate_status.v2[i] = ladrc.acquire_differential_signal()(i);
+
+		rate_status.e1[i] = ladrc.acquire_e1()(i);
+		rate_status.e2[i] = ladrc.acquire_e2()(i);
+		rate_status.u0[i] = ladrc.acquire_u0()(i);
+		rate_status.u[i] = ladrc.acquire_ouptut()(i);
+
+		rate_status.y[i] = ladrc.acquire_eso_reference()(i);
+		rate_status.z1[i] = ladrc.acquire_eso_z1()(i);
+		rate_status.z2[i] = ladrc.acquire_eso_z2()(i);
+		rate_status.z3[i] = ladrc.acquire_eso_z3()(i);
+		rate_status.disturb[i] = ladrc.acquire_eso_disturb()(i);
+	}
 }

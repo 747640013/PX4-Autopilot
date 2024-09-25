@@ -8,6 +8,8 @@
 
 #include <matrix/matrix/math.hpp>
 #include <mathlib/mathlib.h>
+#include <uORB/topics/ladrc_status.h>
+#include <drivers/drv_hrt.h>
 
 class LadrcRateControl
 {
@@ -37,7 +39,6 @@ private:
 
 	/*扰动增益*/
 	matrix::Vector3f _disturb_gain{1.f, 1.f, 1.f};
-
 
 	/*eso 状态量*/
 	matrix::Vector3f _y{0.f, 0.f, 0.f};
@@ -97,6 +98,10 @@ public:
 
 	void set_output_limit(const matrix::Vector3f &umin, const matrix::Vector3f &umax);
 
+	/**
+	 * 设置扰动增益
+	 * @param gain 扰动增益
+	 */
 	void set_distrub_gain(const matrix::Vector3f &gain);
 
 	matrix::Vector3f ctl_update(const matrix::Vector3f &v1d, const matrix::Vector3f &v2d,
@@ -123,9 +128,19 @@ public:
 	 */
 	void set_eso_coef(const matrix::Vector3f &b0, const matrix::Vector3f &wc);
 
-
+	/**
+	 * 设置观测器扰动输出限幅值
+	 * @param dmin 下限
+	 * @param dmax 上限
+	 */
 	void set_disturb_limit(const matrix::Vector3f &dmin, const matrix::Vector3f &dmax);
 
+	/**
+	 * 观测器更新计算函数
+	 * @param u 控制输入
+	 * @param y 传感器测量值，角速度
+	 * @param dt 时间间隔
+	 */
 	void eso_update(const matrix::Vector3f &u, const matrix::Vector3f &y, const float dt);
 
 	void eso_reset(void);
@@ -152,4 +167,6 @@ public:
 	void reset(void);
 
 	void clamp(const matrix::Vector3f &val, const matrix::Vector3f &min_val,const matrix::Vector3f &max_val);
+
+	void record_adrc_status(ladrc_status_s &rate_status,LadrcRateControl &ladrc);
 };
