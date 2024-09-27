@@ -242,9 +242,12 @@ MulticopterRateControl::Run()
 
 			// run rate controller
 			Vector3f att_control;
+
 			if (_mc_rate_method == true) {
-				att_control = _ladrc_rate_control.update(rates,_rates_setpoint,dt,_maybe_landed || _landed);
+				att_control = _ladrc_rate_control.update(rates, _rates_setpoint, dt, _maybe_landed || _landed);
+
 			} else {
+				_ladrc_rate_control.update(rates, _rates_setpoint, dt, _maybe_landed || _landed);
 				att_control = _rate_control.update(rates, _rates_setpoint, angular_accel, dt, _maybe_landed || _landed);
 			}
 
@@ -253,6 +256,11 @@ MulticopterRateControl::Run()
 			_rate_control.getRateControlStatus(rate_ctrl_status);
 			rate_ctrl_status.timestamp = hrt_absolute_time();
 			_controller_status_pub.publish(rate_ctrl_status);
+
+			// 记录ladrc 数据
+			ladrc_status_s ladrc_ctrl_status{};
+			_ladrc_rate_control.record_adrc_status(ladrc_ctrl_status, _ladrc_rate_control);
+			_ladrc_status_pub.publish(ladrc_ctrl_status);
 
 			// publish thrust and torque setpoints
 			vehicle_thrust_setpoint_s vehicle_thrust_setpoint{};
