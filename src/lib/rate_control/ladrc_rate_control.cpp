@@ -3,16 +3,13 @@
 using namespace matrix;
 
 
-matrix::Vector3f LadrcRateControl::clamp(const matrix::Vector3f &val, const matrix::Vector3f &min_val,
-		const matrix::Vector3f &max_val)
+void LadrcRateControl::clamp(matrix::Vector3f &val, const matrix::Vector3f &min_val,
+			     const matrix::Vector3f &max_val)
 {
-	matrix::Vector3f clamped_val;
 
 	for (int i = 0; i < 3; ++i) {
-		clamped_val(i) = (val(i)) < min_val(i) ? min_val(i) : ((val(i) > max_val(i)) ? max_val(i) : val(i));
+		val(i) = (val(i)) < min_val(i) ? min_val(i) : ((val(i) > max_val(i)) ? max_val(i) : val(i));
 	}
-
-	return clamped_val;
 }
 
 void LadrcRateControl::set_td_coef(const Vector3f &wn, const Vector3f &zeta)
@@ -71,14 +68,14 @@ void LadrcRateControl::set_distrub_gain(const Vector3f &gain)
 }
 
 void LadrcRateControl::ctl_update(const Vector3f &v1d, const Vector3f &v2d,
-				      const Vector3f &z1, const Vector3f &z2,
-				      const Vector3f &disturbance)
+				  const Vector3f &z1, const Vector3f &z2,
+				  const Vector3f &disturbance)
 {
 	_e1 = v1d - z1;
 	_e2 = v2d - z2;
 	_u0 = _beta1.emult(_e1) + _beta2.emult(_e2);
 	_u = _u0 + _disturb_gain.emult(disturbance);
-	_u = clamp(_u, _umin, _umax);
+	clamp(_u, _umin, _umax);
 }
 
 void LadrcRateControl::ctl_reset()
@@ -134,10 +131,10 @@ void LadrcRateControl::eso_update(const Vector3f &input, const Vector3f &y_, con
 	Vector3f err = _z1 - _y;
 	_z1 += (_z2 - _beta01.emult(err)) * dt;
 	_z2 += (_z3 - _beta02.emult(err) + _b0.emult(input)) * dt;
-	_z3 += -_beta03.emult(err);
+	_z3 += -_beta03.emult(err) * dt;
 
-	_disturb = -_z3.edivide(_b0);
-	_disturb = clamp(_disturb, _disturb_min, _disturb_max);
+	_disturb = - _z3.edivide(_b0);
+	clamp(_disturb, _disturb_min, _disturb_max);
 }
 
 void LadrcRateControl::eso_reset()

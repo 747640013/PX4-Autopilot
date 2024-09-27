@@ -52,7 +52,7 @@ private:
 	matrix::Vector3f _disturb_max{0.f, 0.f, 0.f};
 
 	/*扰动增益,注意避免除0*/
-	matrix::Vector3f _b0{1e3, 1e3, 1e3};
+	matrix::Vector3f _b0{1e5, 1e5, 1e5};
 
 	/*观测器参数*/
 	matrix::Vector3f _beta01{0.f, 0.f, 0.f};
@@ -166,7 +166,7 @@ public:
 
 	void reset(void);
 
-	matrix::Vector3f clamp(const matrix::Vector3f &val, const matrix::Vector3f &min_val,const matrix::Vector3f &max_val);
+	void clamp( matrix::Vector3f &val, const matrix::Vector3f &min_val,const matrix::Vector3f &max_val);
 
 	void record_adrc_status(ladrc_status_s &rate_status,LadrcRateControl &ladrc);
 };

@@ -247,8 +247,8 @@ MulticopterRateControl::Run()
 				att_control = _ladrc_rate_control.update(rates, _rates_setpoint, dt, _maybe_landed || _landed);
 
 			} else {
-				_ladrc_rate_control.update(rates, _rates_setpoint, dt, _maybe_landed || _landed);
 				att_control = _rate_control.update(rates, _rates_setpoint, angular_accel, dt, _maybe_landed || _landed);
+				_ladrc_rate_control.update(rates,_rates_setpoint,dt,_maybe_landed || _landed);
 			}
 
 			// publish rate controller status
