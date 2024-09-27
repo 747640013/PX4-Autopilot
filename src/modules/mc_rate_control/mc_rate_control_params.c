@@ -331,7 +331,7 @@ PARAM_DEFINE_FLOAT(ADRC_R_TD_FREQ, 60.0);
  * @decimal 4
  * @group Multicopter ADRC Control
  */
-PARAM_DEFINE_FLOAT(ADRC_R_ERR_K1, 0.1);
+PARAM_DEFINE_FLOAT(ADRC_R_ERR_K1, 0.08);
 
 /**
  * ADRC state2 feedback gain for roll
@@ -341,7 +341,7 @@ PARAM_DEFINE_FLOAT(ADRC_R_ERR_K1, 0.1);
  * @decimal 4
  * @group Multicopter ADRC Control
  */
-PARAM_DEFINE_FLOAT(ADRC_R_ERR_K2, 0);
+PARAM_DEFINE_FLOAT(ADRC_R_ERR_K2, 0.002);
 
 /**
  * ADRC disturb max amplitude for roll
@@ -425,7 +425,7 @@ PARAM_DEFINE_FLOAT(ADRC_P_TD_FREQ, 60.0);
  * @decimal 4
  * @group Multicopter ADRC Control
  */
-PARAM_DEFINE_FLOAT(ADRC_P_ERR_K1, 0.1);
+PARAM_DEFINE_FLOAT(ADRC_P_ERR_K1, 0.08);
 
 /**
  * ADRC state2 feedback gain for pitch
@@ -435,7 +435,7 @@ PARAM_DEFINE_FLOAT(ADRC_P_ERR_K1, 0.1);
  * @decimal 4
  * @group Multicopter ADRC Control
  */
-PARAM_DEFINE_FLOAT(ADRC_P_ERR_K2, 0);
+PARAM_DEFINE_FLOAT(ADRC_P_ERR_K2, 0.008);
 
 /**
  * ADRC disturb max amplitude for pitch

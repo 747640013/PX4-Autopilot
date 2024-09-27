@@ -71,7 +71,7 @@ public:
 	void set_td_coef(const matrix::Vector3f &wn, const matrix::Vector3f &zeta);
 
 	/**
-	 * 更新跟踪微分器参数
+	 * 更新跟踪微分器状态量
 	 * @param input 三轴，角速度环输入，即角度环输出
 	 * @param dt 三轴，时间间隔
 	 */
@@ -104,9 +104,9 @@ public:
 	 */
 	void set_distrub_gain(const matrix::Vector3f &gain);
 
-	matrix::Vector3f ctl_update(const matrix::Vector3f &v1d, const matrix::Vector3f &v2d,
+	void ctl_update(const matrix::Vector3f &v1d, const matrix::Vector3f &v2d,
 				    const matrix::Vector3f &z1, const matrix::Vector3f &z2,
-				    const matrix::Vector3f &why);
+				    const matrix::Vector3f &disturbance);
 
 	/**
 	 * 重置控制量
@@ -166,7 +166,7 @@ public:
 
 	void reset(void);
 
-	void clamp(const matrix::Vector3f &val, const matrix::Vector3f &min_val,const matrix::Vector3f &max_val);
+	matrix::Vector3f clamp(const matrix::Vector3f &val, const matrix::Vector3f &min_val,const matrix::Vector3f &max_val);
 
 	void record_adrc_status(ladrc_status_s &rate_status,LadrcRateControl &ladrc);
 };

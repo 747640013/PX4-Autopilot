@@ -4,7 +4,7 @@ using namespace matrix;
 
 
 matrix::Vector3f LadrcRateControl::clamp(const matrix::Vector3f &val, const matrix::Vector3f &min_val,
-			     const matrix::Vector3f &max_val)
+		const matrix::Vector3f &max_val)
 {
 	matrix::Vector3f clamped_val;
 
@@ -176,23 +176,23 @@ Vector3f LadrcRateControl::acquire_eso_disturb()
 Vector3f LadrcRateControl::update(const Vector3f &rate, const Vector3f &rate_sp, const float dt, const bool landed)
 {
 	td_update(rate_sp, dt);
-	Vector3f v1 = acquire_control_input();
-	Vector3f v2 = acquire_differential_signal();
+	// Vector3f v1 = acquire_control_input();
+	// Vector3f v2 = acquire_differential_signal();
 
-	Vector3f z1 = acquire_eso_z1();
-	Vector3f z2 = acquire_eso_z2();
-	//Vector3f z3_temp = acquire_eso_z3();
-	Vector3f disturb = acquire_eso_disturb();
+	// Vector3f z1 = acquire_eso_z1();
+	// Vector3f z2 = acquire_eso_z2();
+	// //Vector3f z3_temp = acquire_eso_z3();
+	// Vector3f disturb = acquire_eso_disturb();
 
-	Vector3f u = ctl_update(v1, v2, z1, z2, disturb);
+	ctl_update(_v1, _v2, _z1, _z2, _disturb);
 
-	eso_update(u, rate, dt);
+	eso_update(_u, rate, dt);
 
 	if (landed) {
 		reset();
 	}
 
-	return u;
+	return _u;
 
 }
 
