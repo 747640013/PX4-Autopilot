@@ -26,6 +26,7 @@ if(ENABLE_LOCKSTEP_SCHEDULER STREQUAL "no")
 			tf-g1
 			tf-g2
 			tf-r1
+			bo105
 		)
 
 		# find corresponding airframes

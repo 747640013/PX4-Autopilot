@@ -1,0 +1,31 @@
+#!/bin/sh
+#
+# @name Mingsong Li
+# helicopter airframe. Only for FlightGear simulator
+#
+# @type helicopter
+# @class helicopter
+#
+# @url
+#
+#
+
+. ${R}etc/init.d/rc.heli_defaults
+
+
+
+param set-default COM_DISARM_PRFLT 0
+
+param set-default CA_AIRFRAME 11
+
+param set-default CA_ROTOR_COUNT 2
+
+param set-default CA_SP0_COUNT 3
+param set-default CA_SP0_ANG0 60
+param set-default CA_SP0_ANG1 180
+param set-default CA_SP0_ANG2 300
+param set-default PWM_MAIN_FUNC1 101 # main motor
+param set-default PWM_MAIN_FUNC2 102
+param set-default PWM_MAIN_FUNC3 201 # servo
+param set-default PWM_MAIN_FUNC4 202
+param set-default PWM_MAIN_FUNC5 203
