@@ -172,6 +172,10 @@ void ActuatorEffectivenessHelicopter::updateSetpoint(const matrix::Vector<float,
 			setSaturationFlag(pitch_coeff, _saturation_flags.pitch_pos, _saturation_flags.pitch_neg);
 		}
 	}
+	// PX4_INFO("collective=%f",static_cast<double>(collective_pitch));
+	// PX4_INFO("pitch=%f",static_cast<double>(control_sp(ControlAxis::PITCH)));
+	// //PX4_INFO("roll=%f",static_cast<double>(control_sp(ControlAxis::ROLL)));
+	// PX4_INFO("inv_roll=%f",static_cast<double>(-actuator_sp(2)+actuator_sp(4))/sqrt(3.0));
 }
 
 bool ActuatorEffectivenessHelicopter::mainMotorEnaged()

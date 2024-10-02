@@ -26,9 +26,9 @@ export PX4_SIM_MODEL=flightgear_${model}
 
 echo "FG setup"
 cd "${src_path}/Tools/simulation/flightgear/flightgear_bridge/"
-# 运行fg 并且写入模型参数 并且创建通信协议
+# 运行fg 并写入模型参数、创建通信协议
 ./FG_run.py models/${model}.json 0
-# 运行fg bridge 传入参数
+# 运行fg bridge 并传入参数
 # 参数1：0
 # 参数2：文件执行结果 控制通道数量以及控制通道
 "${build_path}/build_flightgear_bridge/flightgear_bridge" 0 `./get_FGbridge_params.py "models/"${model}".json"` &
